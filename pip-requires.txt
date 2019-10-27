@@ -1,5 +1,5 @@
-Django==1.5.1
-RapidSMS==0.9.6a
+Django>=1.5
+RapidSMS==1.1.0
 -e git+http://github.com/nyaruka/django-eav.git#egg=django-eav
 django-uni-form==0.8.0
 python-digest

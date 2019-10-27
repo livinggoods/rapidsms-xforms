@@ -7,8 +7,8 @@ setup(
 
     install_requires = [
         "django>=1.5",
-        "rapidsms==0.9.6a",
-        "django-uni-form==0.8.0",
+        "rapidsms==1.1.0",
+        "django-uni-form",
         "python-digest==1.7",
         "django-digest==1.13"
     ],
