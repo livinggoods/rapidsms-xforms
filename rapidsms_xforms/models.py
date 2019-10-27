@@ -62,11 +62,11 @@ class XForm(models.Model):
     restrict_message = models.CharField(max_length=160, null=True, blank=True,
                                         help_text="The error message that will be returned to users if they do not have the right privileges to submit this form.  Only required if the field is restricted.")
 
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User,  on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-    site = models.ForeignKey(Site)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
     objects = models.Manager()
     on_site = CurrentSiteManager()
 
