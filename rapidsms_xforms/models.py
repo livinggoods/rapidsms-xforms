@@ -7,7 +7,7 @@ from django.db import connections, router, transaction, DEFAULT_DB_ALIAS
 from eav.models import Attribute, Value
 from eav import register
 from eav.managers import EntityManager
-from rapidsms.contrib.locations.models import Point
+# from rapidsms.contrib.locations.models import Point
 from rapidsms.models import Connection
 import django.dispatch
 import re
@@ -1102,41 +1102,41 @@ XFormField.register_field_type(XFormField.TYPE_AUDIO, 'Audio', create_binary,
 XFormField.register_field_type(XFormField.TYPE_VIDEO, 'Video', create_binary,
                                xforms_type='binary', db_type=XFormField.TYPE_OBJECT, xform_only=True)
 
-def create_geopoint(command, value, raw=None, connection=None):
-    """
-    Used by our arbitrary field saving / lookup.  This takes the command and the string value representing
-    a geolocation and return a Point location.
-    """
-    coords = value.split(' ')
-    if len(coords) < 2:
-        raise ValidationError("+%s parameter must be GPS coordinates in the format 'lat long'" % command)
-
-    for coord in coords[0:2]:
-        try:
-            test = float(coord)
-        except ValueError:
-            raise ValidationError("+%s parameter must be GPS coordinates the format 'lat long'" % command)
-        
-    # lat needs to be between -90 and 90
-    if float(coords[0]) < -90 or float(coords[0]) > 90:
-        raise ValidationError("+%s parameter has invalid latitude, must be between -90 and 90" % command)
-        
-    # lng needs to be between -180 and 180
-    if float(coords[1]) < -180 or float(coords[1]) > 180:
-        raise ValidationError("+%s parameter has invalid longitude, must be between -180 and 180" % command)
-
-    # our cleaned value is the coordinates as a tuple
-    cleaned_value = Point.objects.create(latitude=coords[0], longitude=coords[1])
-    return cleaned_value
+# def create_geopoint(command, value, raw=None, connection=None):
+#     """
+#     Used by our arbitrary field saving / lookup.  This takes the command and the string value representing
+#     a geolocation and return a Point location.
+#     """
+#     coords = value.split(' ')
+#     if len(coords) < 2:
+#         raise ValidationError("+%s parameter must be GPS coordinates in the format 'lat long'" % command)
+#
+#     for coord in coords[0:2]:
+#         try:
+#             test = float(coord)
+#         except ValueError:
+#             raise ValidationError("+%s parameter must be GPS coordinates the format 'lat long'" % command)
+#
+#     # lat needs to be between -90 and 90
+#     if float(coords[0]) < -90 or float(coords[0]) > 90:
+#         raise ValidationError("+%s parameter has invalid latitude, must be between -90 and 90" % command)
+#
+#     # lng needs to be between -180 and 180
+#     if float(coords[1]) < -180 or float(coords[1]) > 180:
+#         raise ValidationError("+%s parameter has invalid longitude, must be between -180 and 180" % command)
+#
+#     # our cleaned value is the coordinates as a tuple
+#     cleaned_value = Point.objects.create(latitude=coords[0], longitude=coords[1])
+#     return cleaned_value
 
 # register geopoints as a type
 XFormField.register_field_type(XFormField.TYPE_GEOPOINT, 'GPS Coordinate', create_geopoint,
                                xforms_type='geopoint', db_type=XFormField.TYPE_OBJECT)
 
 # add a to_dict to Point, yay for monkey patching
-def point_to_dict(self):
-    return dict(name='coord', lat=self.latitude, lng=self.longitude)
-Point.to_dict = point_to_dict
+# def point_to_dict(self):
+#     return dict(name='coord', lat=self.latitude, lng=self.longitude)
+# Point.to_dict = point_to_dict
 
 def dl_distance(s1, s2):
     """
