@@ -711,7 +711,7 @@ class XFormField(Attribute):
         TYPE_TEXT:  dict( label='String', type=TYPE_TEXT, db_type=TYPE_TEXT, xforms_type='string', parser=None, puller=None, xform_only=False),
     }
 
-    xform = models.ForeignKey(XForm, related_name='fields')
+    xform = models.ForeignKey(XForm, related_name='fields', on_delete=models.CASCADE)
     field_type = models.SlugField(max_length=8, null=True, blank=True)
     command = EavSlugField(max_length=32)
     order = models.IntegerField(default=0)
@@ -906,7 +906,7 @@ class XFormFieldConstraint(models.Model):
     Constraints are evaluated in order, the first constraint to fail shortcuts all subsequent 
     constraints.
     """
-    field = models.ForeignKey(XFormField, related_name='constraints')
+    field = models.ForeignKey(XFormField, related_name='constraints', on_delete=models.CASCADE)
     
     type = models.CharField(max_length=10, choices=CONSTRAINT_CHOICES)
     test = models.CharField(max_length=255, null=True)
@@ -988,9 +988,9 @@ class XFormSubmission(models.Model):
     storing where the submission came form.
     """
 
-    xform = models.ForeignKey(XForm, related_name='submissions')
+    xform = models.ForeignKey(XForm, related_name='submissions', on_delete=models.CASCADE)
     type = models.CharField(max_length=8, choices=SUBMISSION_CHOICES)
-    connection = models.ForeignKey(Connection, null=True)
+    connection = models.ForeignKey(Connection, null=True, on_delete=models.CASCADE)
     raw = models.TextField()
     has_errors = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
@@ -1043,7 +1043,7 @@ class XFormSubmissionValue(Value):
     collection and validation.
     """
 
-    submission = models.ForeignKey(XFormSubmission, related_name='values')
+    submission = models.ForeignKey(XFormSubmission, related_name='values', on_delete=models.CASCADE)
 
     def cleaned(self):
         return self.field.clean_submission(self.value, self.submission.type)
