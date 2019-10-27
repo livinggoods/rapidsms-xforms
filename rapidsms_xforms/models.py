@@ -1130,8 +1130,8 @@ XFormField.register_field_type(XFormField.TYPE_VIDEO, 'Video', create_binary,
 #     return cleaned_value
 
 # register geopoints as a type
-XFormField.register_field_type(XFormField.TYPE_GEOPOINT, 'GPS Coordinate', create_geopoint,
-                               xforms_type='geopoint', db_type=XFormField.TYPE_OBJECT)
+# XFormField.register_field_type(XFormField.TYPE_GEOPOINT, 'GPS Coordinate', create_geopoint,
+#                                xforms_type='geopoint', db_type=XFormField.TYPE_OBJECT)
 
 # add a to_dict to Point, yay for monkey patching
 # def point_to_dict(self):
